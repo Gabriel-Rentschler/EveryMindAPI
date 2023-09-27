@@ -45,7 +45,9 @@ namespace EveryMind.Controllers
                     using (SqlCommand command = new SqlCommand(sql, connection)) {
                         using (SqlDataReader reader = command.ExecuteReader()) {
                             while (reader.Read()) {
-                                if (username == reader.GetString(0) && password == reader.GetString(1)) { return true; }
+                                var sqlUsername = reader.GetString(0);
+                                var sqlPassword = reader.GetString(1);
+                                if (username == sqlUsername && password == sqlPassword) { return true; }
                             }
                         }
                     }
