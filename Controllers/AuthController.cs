@@ -14,12 +14,12 @@ namespace EveryMind.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly SqlConnectionStringBuilder _connectionString;
+        //private readonly ConnectionStringSettings _connectionString;
 
-        public AuthController(ILogger<AuthController> logger, SqlConnectionStringBuilder connectionString)
+        public AuthController(ILogger<AuthController> logger)
         {
             _logger = logger;
-            _connectionString = connectionString;
+            //_connectionString = ConfigurationManager.ConnectionStrings["everymindAPI"];
         }
 
         [HttpPost]
@@ -27,7 +27,16 @@ namespace EveryMind.Controllers
         public bool Auth(string username, string password)
         {
             try {
-                using (var connection = new SqlConnection(_connectionString.ConnectionString)) {
+
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+
+                builder.DataSource = "34.121.179.44";
+                builder.UserID = "sqlserver";
+                builder.Password = "Jesusbebendopinga321@";
+                builder.InitialCatalog = "everymindDB";
+
+
+                using (var connection = new SqlConnection(builder.ConnectionString)) {
 
                     connection.Open();
 
